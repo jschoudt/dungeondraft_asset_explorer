@@ -1,0 +1,28 @@
+name: dungeondraft-asset-explorer
+version: 0.1.0
+summary: Browse all your Dungeondraft Assets
+description: This app will open a directory and scann all the dunegondraft_pack files in the directory. It will show the images for all the assets in those pack files and let you quickly scroll through them in full screen. Mousing over an asset will display the pack file name and the path of the asset in that pack.
+
+confinement: strict
+base: core18
+grade: stable
+
+slots:
+  dbus-dungeondraft-asset-explorer: # adjust accordingly to your app name
+    interface: dbus
+    bus: session
+    name: org.bar.dungeondraft_asset_explorer # adjust accordingly to your app name and
+    
+apps:
+  dungeondraft-asset-explorer:
+    command: dungeondraft-asset-explorer
+    extensions: [flutter-master] # Where "master" defines which Flutter channel to use for the build
+    plugs:
+    - network
+    slots:
+      - dbus-dungeondraft-asset-explorer
+parts:
+  dungeondraft-asset-explorer:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart # The main entry-point file of the application

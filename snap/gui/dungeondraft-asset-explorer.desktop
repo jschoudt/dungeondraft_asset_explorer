@@ -1,0 +1,8 @@
+  [Desktop Entry]
+  Name=Dungeondraft Asset Explorer
+  Comment=Quickly browse all your Dungeondraft assets to find the pack(s) you need to enable
+  Exec=dungeondraft-asset-explorer
+  Icon=${SNAP}/meta/gui/dungeondraft-asset-explorer.png
+  Terminal=false
+  Type=Application
+  Categories=Graphics;
