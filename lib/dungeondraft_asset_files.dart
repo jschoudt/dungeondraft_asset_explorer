@@ -21,11 +21,16 @@ class DungeondraftAssetFileAsset {
 }
 
 class DungeondraftAssetFile {
+  final DungeondraftAssetDirectory _parent;
   final String _filePath;
   String _packId = '';
   final List<DungeondraftAssetFileAsset> _assets = [];
 
-  DungeondraftAssetFile(this._filePath);
+  DungeondraftAssetFile(this._parent, this._filePath);
+
+  String getRelativeFilePath() {
+    return _filePath.substring(_parent.getAssetDirectoryPath.length + 1);
+  }
 
   Future<int> _getNextInt32(RandomAccessFile file) async {
     final Uint8List bytes = await file.read(4);
@@ -139,7 +144,8 @@ class DungeondraftAssetDirectory {
 
   Future<void> loadAssetDirectory() async {
     Future<DungeondraftAssetFile> loadAssetFileMetadata(File file) async {
-      final DungeondraftAssetFile assetFile = DungeondraftAssetFile(file.path);
+      final DungeondraftAssetFile assetFile =
+          DungeondraftAssetFile(this, file.path);
       await assetFile.readHeaders();
       return assetFile;
     }

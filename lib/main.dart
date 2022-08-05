@@ -121,17 +121,23 @@ class _HomePageState extends State<HomePage> {
         if (!_searchPattern.hasMatch(asset.assetUri)) {
           continue;
         }
+        final shortAssetName = asset.assetUri.replaceFirst(trimLeft, '');
         if (imageExp.hasMatch(asset.assetUri)) {
           widgets.add(Container(
               padding: const EdgeInsets.all(4.0),
               decoration: BoxDecoration(border: Border.all()),
               child: Stack(children: [
-                Image.memory(asset.parentFile.readImageFileSync(asset.assetUri),
-                    width: 256.0,
-                    height: 256.0,
-                    semanticLabel: asset.assetUri,
-                    alignment: Alignment.center),
-                Text(asset.assetUri.replaceFirst(trimLeft, ''),
+                Tooltip(
+                    message:
+                        'File: ${asset.parentFile.getRelativeFilePath()}\nAsset: $shortAssetName',
+                    waitDuration: const Duration(milliseconds: 500),
+                    child: Image.memory(
+                        asset.parentFile.readImageFileSync(asset.assetUri),
+                        width: 256.0,
+                        height: 256.0,
+                        semanticLabel: asset.assetUri,
+                        alignment: Alignment.center)),
+                Text(shortAssetName,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                         fontSize: 16,
